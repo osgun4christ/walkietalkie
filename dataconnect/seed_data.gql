@@ -1,0 +1,61 @@
+mutation CreateDemoData @transaction @auth(level: PUBLIC, insecureReason: "This operation is safe to expose to the public") {
+  user_insertMany(data: [
+    {
+      id: "550e8400-e29b-41d4-a716-446655440000",
+      username: "demouser1",
+      email: "demouser1@example.com",
+      createdAt: "2024-04-26T12:00:00Z"
+    },
+    {
+      id: "550e8400-e29b-41d4-a716-446655440001",
+      username: "demouser2",
+      email: "demouser2@example.com",
+      createdAt: "2024-04-26T13:00:00Z"
+    }
+  ])
+  channel_insertMany(data: [
+    {
+      id: "660e8400-e29b-41d4-a716-446655440000",
+      name: "channel1",
+      hostId: "550e8400-e29b-41d4-a716-446655440000",
+      createdAt: "2024-04-26T14:00:00Z",
+      isPrivate: false
+    },
+    {
+      id: "660e8400-e29b-41d4-a716-446655440001",
+      name: "channel2",
+      hostId: "550e8400-e29b-41d4-a716-446655440001",
+      createdAt: "2024-04-26T15:00:00Z",
+      isPrivate: true
+    }
+  ])
+  channelParticipant_insertMany(data: [
+    {
+      userId: "550e8400-e29b-41d4-a716-446655440000",
+      channelId: "660e8400-e29b-41d4-a716-446655440000",
+      isSpeaker: true,
+      joinedAt: "2024-04-26T16:00:00Z"
+    },
+    {
+      userId: "550e8400-e29b-41d4-a716-446655440001",
+      channelId: "660e8400-e29b-41d4-a716-446655440001",
+      isSpeaker: false,
+      joinedAt: "2024-04-26T17:00:00Z"
+    }
+  ])
+  follow_insertMany(data: [
+    {
+      followerId: "550e8400-e29b-41d4-a716-446655440000",
+      followedId: "550e8400-e29b-41d4-a716-446655440001",
+      createdAt: "2024-04-26T18:00:00Z"
+    }
+  ])
+  report_insertMany(data: [
+    {
+      reporterId: "550e8400-e29b-41d4-a716-446655440000",
+      reason: "Inappropriate content",
+      createdAt: "2024-04-26T19:00:00Z",
+      reportedChannelId: "660e8400-e29b-41d4-a716-446655440000"
+    }
+  ])
+}

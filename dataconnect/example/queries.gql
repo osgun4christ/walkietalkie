@@ -1,0 +1,41 @@
+mutation CreateChannel($name: String!, $description: String, $isPrivate: Boolean!) @auth(level: USER) {
+  channel_insert(data: {
+    name: $name,
+    description: $description,
+    isPrivate: $isPrivate,
+    hostId_expr: "auth.uid",
+    createdAt_expr: "request.time"
+  })
+}
+
+query GetChannels @auth(level: USER) {
+  channels {
+    id
+    name
+    description
+    isPrivate
+    host {
+      id
+      username
+    }
+  }
+}
+
+mutation JoinChannel($channelId: UUID!) @auth(level: USER) {
+  channelParticipant_insert(data: {
+    channelId: $channelId,
+    userId_expr: "auth.uid",
+    isSpeaker: false,
+    joinedAt_expr: "request.time"
+  })
+}
+
+mutation ReportChannel($channelId: UUID!, $reason: String!, $details: String) @auth(level: USER) {
+  report_insert(data: {
+    reportedChannelId: $channelId,
+    reporterId_expr: "auth.uid",
+    reason: $reason,
+    details: $details,
+    createdAt_expr: "request.time"
+  })
+}
